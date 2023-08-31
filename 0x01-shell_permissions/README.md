@@ -5,3 +5,5 @@ task3 script that changes the owner of the file hello to the user betty
 task4 script that creates an empty file called hello
 task5 a script that adds execute permission to the owner of the file hello which will be in the working directory
 task6 script that adds execute permission to the owner and the group owner, and read permission to other users, to the file hello
+task7 script that adds execution permission to the owner, the group owner and the other users, to the file hello
+taask8  a script that sets the permission to the file hello to no permission at all for owner and group but other users have all permissions
