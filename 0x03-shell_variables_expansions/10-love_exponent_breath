@@ -1,2 +1,2 @@
 #!/bin/bash
-echo BREATHLOVE=$(((BREATHE ** POWER)))
+echo $(($BREATHE ** $POWER))
