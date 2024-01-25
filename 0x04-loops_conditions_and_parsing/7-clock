@@ -4,7 +4,7 @@
 # display minutes from 1 to 59
 
 hr=0
-while [ $hour -le 12 ]
+while [ $hr -le 12 ]
 do
 	echo "Hour: $hr"
 	min=1
