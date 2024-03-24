@@ -1,0 +1,15 @@
+# using puppet to set up a client SSH configuration file
+# so that you can connect to a server without typing a password
+
+file_line { 'Turn off passwd auth':
+  ensure => 'present',
+  path   => '/Users/emeldamada/ssh/ssh_config',
+  line   => '    PasswordAuthentication no',
+}
+
+file_line { 'Declare identity file':
+  ensure => 'present',
+  path   => '/Users/emeldamada/ssh/ssh_config',
+  line   => '    IdentityFile ~/.ssh/school',
+}
+
