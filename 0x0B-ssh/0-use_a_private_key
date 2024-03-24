@@ -2,4 +2,4 @@
 #Bash script that uses ssh to connect to your server using the private
 #key ~/.ssh/school with the user ubuntu 
 
-ssh -i /Users/emeldamada/.ssh/id_rsa ubuntu@18.235.249.46
+ssh -i /Users/emeldamada/.ssh/id_rsa ubuntu@18.210.33.105
