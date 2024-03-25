@@ -1,0 +1,32 @@
+i#!/usr/bin/env bash
+# script that installs ngix webserver
+# and configures Nginx server so that
+#redirect_me is redirecting to another page
+
+echo -e "Update and install Nginx.\n"
+sudo apt-get update -y -qq && \
+	sudo apt-get install nginx -y
+echo -e "\nSetting up...\n"
+
+sudo service nginx start
+
+sudo ufw allow 'Nginx HTTP'
+
+sudo chown -R "$USER":"$USER" /var/www/html
+
+sudo chmod -R 755 /var/www
+
+cp /var/www/html/index.nginx-debian.html /var/www/html/index.nginx-debian.html.bckp
+
+echo -e "Hello World!" | dd status=none of=/var/www/html/index.nginx-debian.html
+
+sudo sed -i '24i\       rewrite ^/ 301 Moved Permanently https://www.facebook.com/TJones78964;' /etc/nginx/sites-available/default
+
+echo "Ceci n'est pas une page" >> /var/www/html/error_404.html
+
+sudo sed -i '25i\	error_page 404 /error_404.html;' /etc/nginx/sites-available/default
+
+sudo service nginx restart
+
+echo -e "\nCompleted.\n"
+
