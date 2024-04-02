@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+# making the fix fix short and sweet to allow NGINX to read port 80
+# kill-grep .. command finds the PID by using the pgrep command and 
+# then sends SIGGTERM to that process using killcommand
+# restarting will allow the NGINX to apply the changes
+
+ln -sf /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
+service nginx start
+kill "$(pgrep 'nginx' | head -1)”
