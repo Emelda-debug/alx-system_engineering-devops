@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+# step1 is to make sure that NGINX is configured to 
+# listen on port 80
+#step2 remove tje default Nginx configuration files
+# sites-available dir contains available config files and the 
+# sites-enabled contains the active config files.
+# Creating a symbolic link(ln -s command) ensures that any changes
+# made to the default file in the sites-available dir will be refelcted
+# in the defaut file in the sites-enabled dir
+
+rm /etc/nginx/sites-enabled/default
+ln -s /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
+service nginx restart 
