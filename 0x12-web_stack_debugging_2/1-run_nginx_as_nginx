@@ -1,0 +1,63 @@
+#!/usr/bin/env bash
+# script that configures the container to
+# nginx must be running as nginx user
+# nginx must be listening on all active IPs on port 8080
+# without using apt-get remove
+
+
+# Check if the script is running with root privileges
+if [[ $EUID -ne 0 ]]; then
+   echo "Please run as root"
+   exit 1
+fi
+
+# Find the nginx.conf file
+nginx_conf=$(find /etc/nginx/ -name "nginx.conf" -type f)
+
+if [[ -z "$nginx_conf" ]]; then
+   echo "Can't locate the nginx.conf file"
+   exit 1
+fi
+
+# Update the nginx configuration
+cat > "$nginx_conf" <<EOF
+user nginx;
+worker_processes auto;
+error_log /var/log/nginx/error.log;
+pid /var/run/nginx.pid;
+
+events {
+    worker_connections 1024;
+}
+
+http {
+    include /etc/nginx/mime.types;
+    default_type application/octet-stream;
+    log_format main '\$remote_addr - \$remote_user [\$time_local] "\$request" '
+                    '\$status \$body_bytes_sent "\$http_referer" '
+                    '"\$http_user_agent" "\$http_x_forwarded_for"';
+    access_log /var/log/nginx/access.log main;
+    sendfile on;
+    tcp_nopush on;
+    tcp_nodelay on;
+    keepalive_timeout 65;
+    types_hash_max_size 2048;
+
+    server {
+        listen 8080 default_server;
+        listen [::]:8080 default_server;
+
+        root /var/www/html;
+        index index.html index.htm;
+
+        location / {
+            try_files \$uri \$uri/ =404;
+        }
+    }
+}
+EOF
+
+# Restarting nginx service
+service nginx restart
+
+echo "Nginx has been configured to run as the 'nginx' user and listen on port 8080."

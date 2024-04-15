@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+# script that makes fix for task1 short and sweet
+
+echo "user nginx;" > /etc/nginx/nginx.conf
+echo "worker_processes auto;" >> /etc/nginx/nginx.conf
+echo "events { worker_connections 1024; }" >> /etc/nginx/nginx.conf
+echo "http { include /etc/nginx/mime.types; default_type application/octet-stream; access_log /var/log/nginx/access.log; error_log /var/log/nginx/error.log; server { listen 8080 default_server; listen [::]:8080 default_server; }}" >> /etc/nginx/nginx.conf
+nginx -g "daemon off;"
