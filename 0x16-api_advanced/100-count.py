@@ -11,14 +11,12 @@ def count_words(subreddit, word_list, word_count={}, after=None):
     word_list in the titles of all the hot subreddit posts"""
 
     import requests
-
-
-    sub_info_url = requests.get("https://www.reddit.com/r/{}/hot.json"
-                            .format(subreddit),
-                            params={"after": after},
-                            headers={"User-Agent": "My-User-Agent"},
-                            allow_redirects=False)
-    if sub_info_url.status_code != 200:
+    sub_info_url = requests.get(
+            "https://www.reddit.com/r/{}/hot.json".format(subreddit),
+            params={"after": after},
+            headers={"User-Agent": "My-User-Agent"},
+            allow_redirects=False)
+    if sub.status_code != 200:
         return None
 
     info = sub_info_url.json()
@@ -50,5 +48,3 @@ def count_words(subreddit, word_list, word_count={}, after=None):
     else:
         return count_words(subreddit, word_list, word_count,
                            info.get("data").get("after"))
-
-
