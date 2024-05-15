@@ -1,0 +1,43 @@
+server { ONE PAGE
+        listen 80 default_server;
+        listen [::]:80 default_server;
+
+        server_name 18.210.33.105
+
+        add_header X-served-by 218560-web-01
+
+
+        # SSL configuration
+        # listen 443 ssl default_server;
+        # listen [::]:443 ssl default_server;
+        #
+        # Note: You should disable gzip for SSL traffic.
+        # See: https://bugs.debian.org/773332
+        #root /var/www/html;
+        # Add index.php to the list if you are using PHP
+        #index index.html index.htm index.nginx-debian.html;
+
+
+        #serve AIRBNB
+        location  = /airbnb-onepage/{
+                proxy_pass http://127.0.0.1:5000/airbnb-onepage/;
+        }
+
+        #serve AirBnB_clone_v2/web_flask/6-number_odd_or_even
+        location = /airbnb-dynamic/number_odd_or_even/(\d+)$ {
+          proxy_pass http://127.0.0.1:5001/number_odd_or_even/$1;
+        }
+
+        ##serve AirBnB_clone_v3 API
+        location /api {
+                proxy_pass http://127.0.0.1:5002/api;
+        
+        # First attempt to serve request as file, then 
+        # as directory, then fall back to displaying a 404.
+        error_page 404 /404.html;
+        location /404 {
+          root /var/www/html;
+          internal;
+        }
+}
+
